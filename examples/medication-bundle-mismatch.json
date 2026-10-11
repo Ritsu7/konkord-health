@@ -1,0 +1,38 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "SYNTH002",
+        "name": [{"family": "Example", "given": ["Patient"]}],
+        "birthDate": "1980-01-01"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "medreq-1",
+        "status": "completed",
+        "subject": {"reference": "Patient/SYNTH002"},
+        "authoredOn": "2026-10-09T10:00:00Z",
+        "medicationCodeableConcept": {
+          "coding": [
+            {"system": "http://www.nlm.nih.gov/research/umls/rxnorm", "code": "197361", "display": "Lisinopril 10mg Oral Tablet"}
+          ]
+        },
+        "dosageInstruction": [
+          {
+            "timing": {"code": {"text": "QD"}},
+            "route": {"coding": [{"system": "http://snomed.info/sct", "code": "IV"}]},
+            "doseAndRate": [
+              {"doseQuantity": {"value": 20, "unit": "mg", "code": "mg"}}
+            ]
+          }
+        ],
+        "dispenseRequest": {"numberOfRepeatsAllowed": 0}
+      }
+    }
+  ]
+}

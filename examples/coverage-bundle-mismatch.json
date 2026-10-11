@@ -1,0 +1,32 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "SYNTH002",
+        "name": [{"family": "Example", "given": ["Patient"]}],
+        "birthDate": "1980-01-01"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Coverage",
+        "id": "coverage-1",
+        "status": "cancelled",
+        "subscriberId": "MEMBER7788",
+        "beneficiary": {"reference": "Patient/OTHERPAT"},
+        "relationship": {
+          "coding": [{"system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship", "code": "SPO", "display": "Spouse"}]
+        },
+        "period": {"start": "2011-06-01", "end": "2025-01-01"},
+        "payor": [{"reference": "Organization/WRONGPAYOR"}],
+        "class": [
+          {"type": {"coding": [{"code": "group"}]}, "value": "GRPWRONG"}
+        ],
+        "order": 2
+      }
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "SYNTH002",
+        "name": [{"family": "Example", "given": ["Patient"]}],
+        "birthDate": "1980-01-01"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "procedure-2",
+        "status": "completed",
+        "subject": {"reference": "Patient/SYNTH002"},
+        "performedDateTime": "2026-10-08T09:00:00Z",
+        "code": {
+          "coding": [
+            {"system": "http://snomed.info/sct", "code": "999999", "display": "Unrelated procedure"}
+          ]
+        },
+        "performer": [
+          {"actor": {"reference": "Practitioner/7788"}}
+        ]
+      }
+    }
+  ]
+}

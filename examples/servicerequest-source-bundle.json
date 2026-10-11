@@ -1,0 +1,15 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "ServiceRequest",
+        "id": "SR-1",
+        "status": "active",
+        "intent": "order",
+        "subject": {"reference": "Patient/PT-1"}
+      }
+    }
+  ]
+}

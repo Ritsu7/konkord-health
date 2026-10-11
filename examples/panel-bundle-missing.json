@@ -1,0 +1,16 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {"resource": {"resourceType": "Patient", "id": "pat-synth002"}},
+    {"resource": {
+      "resourceType": "Observation", "id": "obs-glucose", "status": "final",
+      "subject": {"reference": "Patient/pat-synth002"},
+      "code": {"coding": [{"system": "http://loinc.org", "code": "2345-7"}]},
+      "valueQuantity": {"value": 95, "unit": "mg/dL", "system": "http://unitsofmeasure.org", "code": "mg/dL"},
+      "interpretation": [{"coding": [{"code": "N"}]}],
+      "referenceRange": [{"low": {"value": 70}, "high": {"value": 99}}],
+      "effectiveDateTime": "2026-10-09T09:00:00Z"
+    }}
+  ]
+}

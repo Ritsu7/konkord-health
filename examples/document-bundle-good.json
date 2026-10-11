@@ -1,0 +1,47 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "SYNTH001"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "DocumentReference",
+        "id": "DOC100-DOC",
+        "masterIdentifier": {"value": "DOC100-DOC"},
+        "status": "current",
+        "type": {
+          "coding": [
+            {"system": "http://loinc.org", "code": "CN", "display": "Consult Note"}
+          ]
+        },
+        "subject": {"reference": "Patient/SYNTH001"},
+        "date": "2026-10-08T09:30:00Z",
+        "author": [
+          {"reference": "Practitioner/DOC100"}
+        ],
+        "securityLabel": [
+          {"coding": [{"system": "http://terminology.hl7.org/CodeSystem/v3-Confidentiality", "code": "AU"}]}
+        ],
+        "content": [
+          {
+            "attachment": {
+              "contentType": "FT",
+              "url": "https://example.org/documents/DOC100-DOC.txt"
+            }
+          }
+        ],
+        "relatesTo": [
+          {
+            "code": "replaces",
+            "target": {"reference": "DocumentReference/DOC050"}
+          }
+        ]
+      }
+    }
+  ]
+}

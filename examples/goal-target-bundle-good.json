@@ -1,0 +1,17 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Goal",
+        "id": "GOAL-1",
+        "lifecycleStatus": "active",
+        "achievementStatus": {
+          "coding": [{"system": "http://terminology.hl7.org/CodeSystem/goal-achievement", "code": "in-progress"}]
+        },
+        "subject": {"reference": "Patient/PT-1"}
+      }
+    }
+  ]
+}

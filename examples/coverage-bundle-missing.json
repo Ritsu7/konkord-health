@@ -1,0 +1,32 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "SYNTH002",
+        "name": [{"family": "Example", "given": ["Patient"]}],
+        "birthDate": "1980-01-01"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Coverage",
+        "id": "coverage-1",
+        "status": "active",
+        "subscriberId": "DIFFERENTMEMBER",
+        "beneficiary": {"reference": "Patient/SYNTH002"},
+        "relationship": {
+          "coding": [{"system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship", "code": "SEL", "display": "Self"}]
+        },
+        "period": {"start": "2010-01-01", "end": "2030-12-31"},
+        "payor": [{"reference": "Organization/PAYOR001"}],
+        "class": [
+          {"type": {"coding": [{"code": "group"}]}, "value": "GRP5566"}
+        ],
+        "order": 1
+      }
+    }
+  ]
+}

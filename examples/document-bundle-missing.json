@@ -1,0 +1,24 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "SYNTH001"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "DocumentReference",
+        "id": "UNRELATED-DOC",
+        "masterIdentifier": {"value": "UNRELATED-DOC"},
+        "status": "current",
+        "subject": {"reference": "Patient/SYNTH001"},
+        "content": [
+          {"attachment": {"contentType": "FT", "url": "https://example.org/documents/UNRELATED-DOC.txt"}}
+        ]
+      }
+    }
+  ]
+}

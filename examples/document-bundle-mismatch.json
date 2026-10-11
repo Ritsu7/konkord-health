@@ -1,0 +1,37 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "SYNTH001"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "DocumentReference",
+        "id": "DOC100-DOC",
+        "masterIdentifier": {"value": "DOC100-DOC"},
+        "status": "current",
+        "type": {
+          "coding": [
+            {"system": "http://loinc.org", "code": "DS", "display": "Discharge Summary"}
+          ]
+        },
+        "subject": {"reference": "Patient/SYNTH999"},
+        "date": "2026-10-09T09:30:00Z",
+        "author": [
+          {"reference": "Practitioner/DOC999"}
+        ],
+        "content": [
+          {
+            "attachment": {
+              "contentType": "PDF"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

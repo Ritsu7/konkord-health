@@ -1,0 +1,17 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "DetectedIssue",
+        "id": "DI-1",
+        "status": "preliminary",
+        "patient": {"reference": "Patient/PT-1"},
+        "evidence": [
+          {"detail": [{"reference": "Condition/COND-1"}, {"reference": "Observation/OBS-1"}]}
+        ]
+      }
+    }
+  ]
+}

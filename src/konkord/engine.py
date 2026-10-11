@@ -1,0 +1,87 @@
+"""Backward-compatible import surface for the pre-0.2 flat engine module.
+
+New code should import from `konkord.adapters`, `konkord.rules`,
+`konkord.reconciliation`, and `konkord.evidence` directly. This
+module is kept so existing scripts/tests using `konkord.engine` keep
+working unchanged.
+"""
+from __future__ import annotations
+from .adapters.hl7v2 import (
+    parse_hl7_oru, parse_hl7_obx, parse_hl7_rde, parse_hl7_allergies, parse_hl7_oru_batch,
+    parse_hl7_conditions, parse_hl7_procedures, parse_hl7_coverage, parse_hl7_documents,
+    parse_hl7_immunizations, parse_hl7_diagnosticreports,
+)
+from .adapters.fhir import (
+    load_fhir_bundle, load_observation,
+    load_fhir_medication_bundle, parse_fhir_medication_bundle,
+    load_fhir_allergy_bundle, parse_fhir_allergy_bundle,
+    parse_fhir_bundle_multi,
+    load_fhir_condition_bundle, parse_fhir_condition_bundle,
+    load_fhir_procedure_bundle, parse_fhir_procedure_bundle,
+    load_fhir_coverage_bundle, parse_fhir_coverage_bundle,
+    load_fhir_claim_bundle, parse_fhir_claim_bundle,
+    load_fhir_claimresponse_bundle, parse_fhir_claimresponse_bundle,
+    load_fhir_eob_bundle, parse_fhir_eob_bundle,
+    load_fhir_document_bundle, parse_fhir_document_bundle,
+    load_fhir_resource_batch, parse_fhir_resource_batch,
+    load_fhir_provider_directory_bundle, parse_fhir_provider_directory_bundle,
+    load_fhir_attribution_bundle, parse_fhir_attribution_bundle,
+    load_fhir_formulary_bundle, parse_fhir_formulary_bundle,
+    load_fhir_careplan_bundle, parse_fhir_careplan_bundle,
+    load_fhir_servicerequest_bundle, parse_fhir_servicerequest_bundle,
+    load_fhir_immunization_bundle, parse_fhir_immunization_bundle,
+    load_fhir_goal_bundle, parse_fhir_goal_bundle,
+    load_fhir_careteam_bundle, parse_fhir_careteam_bundle,
+    load_fhir_detectedissue_bundle, parse_fhir_detectedissue_bundle,
+    load_fhir_task_bundle, parse_fhir_task_bundle,
+    load_fhir_diagnosticreport_bundle, parse_fhir_diagnosticreport_bundle,
+)
+from .reconciliation.engine import (
+    compare, compare_many, compare_many_medications, compare_many_allergies, compare_batch,
+    compare_many_conditions, compare_many_procedures, compare_many_coverages,
+    compare_many_prior_authorizations, compare_many_claims, compare_terminology,
+    compare_many_documents, compare_migration_batch, compare_many_provider_directory,
+    compare_many_member_attribution, compare_many_formulary,
+    compare_run_history, compare_migration_run_history, compare_export_run_history,
+    compare_many_careplans, compare_many_servicerequests, compare_many_immunizations,
+    compare_many_goals, compare_many_careteams, compare_many_detected_issues,
+    compare_many_tasks, compare_many_diagnosticreports,
+)
+
+__all__ = [
+    "parse_hl7_oru", "parse_hl7_obx", "parse_hl7_rde", "parse_hl7_allergies", "parse_hl7_oru_batch",
+    "parse_hl7_conditions", "parse_hl7_procedures", "parse_hl7_coverage", "parse_hl7_documents",
+    "parse_hl7_immunizations", "parse_hl7_diagnosticreports",
+    "load_fhir_bundle", "load_observation",
+    "load_fhir_medication_bundle", "parse_fhir_medication_bundle",
+    "load_fhir_allergy_bundle", "parse_fhir_allergy_bundle",
+    "parse_fhir_bundle_multi",
+    "load_fhir_condition_bundle", "parse_fhir_condition_bundle",
+    "load_fhir_procedure_bundle", "parse_fhir_procedure_bundle",
+    "load_fhir_coverage_bundle", "parse_fhir_coverage_bundle",
+    "load_fhir_claim_bundle", "parse_fhir_claim_bundle",
+    "load_fhir_claimresponse_bundle", "parse_fhir_claimresponse_bundle",
+    "load_fhir_eob_bundle", "parse_fhir_eob_bundle",
+    "load_fhir_document_bundle", "parse_fhir_document_bundle",
+    "load_fhir_resource_batch", "parse_fhir_resource_batch",
+    "load_fhir_provider_directory_bundle", "parse_fhir_provider_directory_bundle",
+    "load_fhir_attribution_bundle", "parse_fhir_attribution_bundle",
+    "load_fhir_formulary_bundle", "parse_fhir_formulary_bundle",
+    "load_fhir_careplan_bundle", "parse_fhir_careplan_bundle",
+    "load_fhir_servicerequest_bundle", "parse_fhir_servicerequest_bundle",
+    "load_fhir_immunization_bundle", "parse_fhir_immunization_bundle",
+    "load_fhir_goal_bundle", "parse_fhir_goal_bundle",
+    "load_fhir_careteam_bundle", "parse_fhir_careteam_bundle",
+    "load_fhir_detectedissue_bundle", "parse_fhir_detectedissue_bundle",
+    "load_fhir_task_bundle", "parse_fhir_task_bundle",
+    "load_fhir_diagnosticreport_bundle", "parse_fhir_diagnosticreport_bundle",
+    "compare", "compare_many", "compare_many_medications", "compare_many_allergies", "compare_batch",
+    "compare_many_conditions", "compare_many_procedures", "compare_many_coverages",
+    "compare_many_prior_authorizations", "compare_many_claims", "compare_terminology",
+    "compare_many_documents", "compare_migration_batch", "compare_many_provider_directory",
+    "compare_many_member_attribution", "compare_many_formulary",
+    "compare_run_history", "compare_migration_run_history", "compare_export_run_history",
+    "compare_many_careplans", "compare_many_servicerequests", "compare_many_immunizations",
+    "compare_many_goals", "compare_many_careteams", "compare_many_detected_issues",
+    "compare_many_tasks", "compare_many_diagnosticreports",
+]

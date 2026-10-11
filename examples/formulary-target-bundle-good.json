@@ -1,0 +1,74 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Basic",
+        "id": "formulary-1",
+        "code": {"coding": [{"code": "Formulary"}]},
+        "identifier": [{"value": "FORM-100"}],
+        "extension": [
+          {"url": "planReference", "valueReference": {"reference": "InsurancePlan/plan-1"}},
+          {"url": "effectivePeriod", "valuePeriod": {"start": "2024-01-01", "end": "2024-12-31"}}
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Basic",
+        "id": "item-1",
+        "code": {"coding": [{"code": "FormularyItem"}]},
+        "identifier": [{"value": "FITEM-1"}],
+        "extension": [
+          {"url": "drugTierID", "valueString": "generic"},
+          {"url": "costShareNormal", "valueMoney": {"value": 10, "currency": "USD"}},
+          {"url": "costShareDeductible", "valueBoolean": false},
+          {"url": "priorAuthorization", "valueBoolean": false},
+          {"url": "stepTherapyLimit", "valueBoolean": false},
+          {"url": "quantityLimit", "valueBoolean": false},
+          {"url": "pharmacyType", "valueString": "retail"},
+          {"url": "formularyReference", "valueReference": {"reference": "Basic/formulary-1"}},
+          {"url": "medicationReference", "valueReference": {"reference": "MedicationKnowledge/med-1"}}
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Basic",
+        "id": "item-2",
+        "code": {"coding": [{"code": "FormularyItem"}]},
+        "identifier": [{"value": "FITEM-2"}],
+        "extension": [
+          {"url": "drugTierID", "valueString": "brand"},
+          {"url": "priorAuthorization", "valueBoolean": true},
+          {"url": "stepTherapyLimit", "valueBoolean": true},
+          {"url": "quantityLimit", "valueBoolean": true},
+          {"url": "pharmacyType", "valueString": "mail-order"},
+          {"url": "formularyReference", "valueReference": {"reference": "Basic/formulary-1"}},
+          {"url": "medicationReference", "valueReference": {"reference": "MedicationKnowledge/med-2"}}
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationKnowledge",
+        "id": "med-1",
+        "code": {"coding": [{"system": "http://www.nlm.nih.gov/research/umls/rxnorm", "code": "12345", "display": "Drug X"}]}
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationKnowledge",
+        "id": "med-2",
+        "code": {"coding": [{"system": "http://www.nlm.nih.gov/research/umls/rxnorm", "code": "67890", "display": "Drug Y"}]}
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "InsurancePlan",
+        "id": "plan-1"
+      }
+    }
+  ]
+}

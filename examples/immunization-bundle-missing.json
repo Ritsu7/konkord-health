@@ -1,0 +1,28 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "SYNTH004",
+        "name": [{"family": "Example", "given": ["Patient"]}],
+        "birthDate": "1980-01-01"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Immunization",
+        "id": "imm-2",
+        "status": "completed",
+        "patient": {"reference": "Patient/SYNTH004"},
+        "occurrenceDateTime": "2024-03-01",
+        "vaccineCode": {
+          "coding": [
+            {"system": "http://hl7.org/fhir/sid/cvx", "code": "03", "display": "MMR"}
+          ]
+        }
+      }
+    }
+  ]
+}

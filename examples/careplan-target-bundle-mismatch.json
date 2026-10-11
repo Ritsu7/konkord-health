@@ -1,0 +1,18 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "CarePlan",
+        "id": "CAREPLAN-1",
+        "status": "completed",
+        "intent": "plan",
+        "subject": {"reference": "Patient/PT-1"},
+        "goal": [
+          {"reference": "Goal/GOAL-1"}
+        ]
+      }
+    }
+  ]
+}

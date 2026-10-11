@@ -1,0 +1,28 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "SYNTH002",
+        "name": [{"family": "Example", "given": ["Patient"]}],
+        "birthDate": "1980-01-01"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "id": "condition-2",
+        "subject": {"reference": "Patient/SYNTH002"},
+        "encounter": {"reference": "Encounter/V7001"},
+        "onsetDateTime": "2010-06-15",
+        "code": {
+          "coding": [
+            {"system": "http://snomed.info/sct", "code": "999999", "display": "Unrelated diagnosis"}
+          ]
+        }
+      }
+    }
+  ]
+}

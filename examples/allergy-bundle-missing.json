@@ -1,0 +1,35 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "SYNTH002",
+        "name": [{"family": "Example", "given": ["Patient"]}],
+        "birthDate": "1980-01-01"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "AllergyIntolerance",
+        "id": "allergy-2",
+        "patient": {"reference": "Patient/SYNTH002"},
+        "onsetDateTime": "2012-03-03",
+        "code": {
+          "coding": [
+            {"system": "http://www.nlm.nih.gov/research/umls/rxnorm", "code": "999999", "display": "Unrelated allergen"}
+          ]
+        },
+        "reaction": [
+          {
+            "manifestation": [
+              {"text": "Swelling"}
+            ],
+            "severity": "mild"
+          }
+        ]
+      }
+    }
+  ]
+}

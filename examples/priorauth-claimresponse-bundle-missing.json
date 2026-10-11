@@ -1,0 +1,43 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "SYNTH002",
+        "name": [{"family": "Example", "given": ["Patient"]}],
+        "birthDate": "1980-01-01"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "ClaimResponse",
+        "id": "claimresponse-1",
+        "status": "active",
+        "type": {"coding": [{"system": "http://terminology.hl7.org/CodeSystem/claim-type", "code": "institutional"}]},
+        "use": "preauthorization",
+        "patient": {"reference": "Patient/SYNTH002"},
+        "created": "2026-01-03T00:00:00Z",
+        "insurer": {"reference": "Organization/PAYOR001"},
+        "request": {"reference": "Claim/claim-1"},
+        "outcome": "complete",
+        "disposition": "Authorized",
+        "preAuthRef": "AUTH-OTHER",
+        "preAuthPeriod": {"start": "2026-01-01", "end": "2026-06-30"},
+        "insurance": [
+          {"sequence": 1, "focal": true, "coverage": {"reference": "Coverage/coverage-1"}}
+        ],
+        "item": [
+          {
+            "itemSequence": 1,
+            "adjudication": [
+              {"category": {"coding": [{"code": "benefit"}]}, "value": 12}
+            ]
+          }
+        ],
+        "identifier": [{"system": "http://example.org/priorauth", "value": "PA-DIFFERENT"}]
+      }
+    }
+  ]
+}

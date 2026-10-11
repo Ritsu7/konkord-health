@@ -1,0 +1,32 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "SYNTH004",
+        "name": [{"family": "Example", "given": ["Patient"]}],
+        "birthDate": "1980-01-01"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Immunization",
+        "id": "imm-1",
+        "status": "completed",
+        "patient": {"reference": "Patient/SYNTH004"},
+        "occurrenceDateTime": "2024-01-15",
+        "lotNumber": "LOT123A",
+        "expirationDate": "2025-06-01",
+        "manufacturer": {"display": "Pfizer Inc"},
+        "doseQuantity": {"value": 0.5, "unit": "mL", "code": "mL"},
+        "vaccineCode": {
+          "coding": [
+            {"system": "http://hl7.org/fhir/sid/cvx", "code": "08", "display": "Hepatitis B pediatric"}
+          ]
+        }
+      }
+    }
+  ]
+}

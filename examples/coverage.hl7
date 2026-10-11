@@ -1,0 +1,4 @@
+MSH|^~\&|REG|HOSPITAL|APP|HOSPITAL|202610091000||ADT^A01|MSG0007|P|2.5
+PID|1||SYNTH002^^^TEST^MR||Example^Patient||19800101
+IN1|1|PPO^Preferred Provider Organization|PAYOR001|Acme Health Plan||||GRP5566||||20100101|20301231||||SEL^Self|||||1|||||||||||||||||||||||||||MEMBER7788
+ZIN|AC

@@ -1,0 +1,47 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Group",
+        "id": "attr-grp-1",
+        "identifier": [{"system": "http://example.org/vbc-contract", "value": "CONTRACT-999"}],
+        "managingEntity": {"reference": "Organization/aco-1"},
+        "characteristic": [
+          {"code": {"coding": [{"code": "risk-adjustment"}]}, "valueBoolean": false}
+        ],
+        "member": [
+          {"entity": {"reference": "Patient/pat-1"}, "period": {"start": "2099-01-01"}},
+          {"entity": {"reference": "Patient/pat-3"}, "period": {"start": "2024-03-01"}}
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Group",
+        "id": "attr-grp-2",
+        "managingEntity": {"reference": "Organization/other-org"},
+        "member": [
+          {"entity": {"reference": "Patient/pat-1"}, "period": {"start": "2024-01-01"}}
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-1",
+        "identifier": [{"system": "http://example.org/member-id", "value": "MBR-1"}]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-3",
+        "identifier": [{"system": "http://example.org/member-id", "value": "MBR-3"}],
+        "deceasedBoolean": true,
+        "deceasedDateTime": "2024-06-01"
+      }
+    }
+  ]
+}

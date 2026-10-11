@@ -1,0 +1,174 @@
+scenario_id,domain,scenario,status,required_fixture_types,notes
+SC-001,Laboratory,Measurement unit lost,IMPLEMENTED,positive|negative|edge,Covered by rule LAB.UNIT (literal unit comparison only; no UCUM conversion)
+SC-002,Laboratory,Incorrect LOINC mapping,IMPLEMENTED,positive|negative|edge,Covered by rule LAB.CODE
+SC-003,Laboratory,Observation timestamp shifted,IMPLEMENTED,positive|negative|edge,Covered by OBS[code].TIMESTAMP in compare_many() (date-level comparison only)
+SC-004,Laboratory,Abnormal flag lost,IMPLEMENTED,positive|negative|edge,Covered by rule LAB.INTERPRETATION
+SC-005,Laboratory,Reference range omitted,IMPLEMENTED,positive|negative|edge,Covered by rule LAB.REFERENCE_RANGE (numeric interval format only)
+SC-006,Laboratory,Precision unexpectedly changed,IMPLEMENTED,positive|negative|edge,Covered by rule LAB.PRECISION (limited by JSON float parsing; trailing zeros lost before comparison)
+SC-007,Laboratory,Numeric result converted to text,IMPLEMENTED,positive|negative|edge,Covered by rule LAB.VALUE_TYPE
+SC-008,Laboratory,Specimen type changed,IMPLEMENTED,positive|negative|edge,Covered by rule LAB.SPECIMEN (OBR-15 vs Observation.specimen.type.text; literal comparison only)
+SC-009,Laboratory,Result status changed,IMPLEMENTED,positive|negative|edge,Covered by rule LAB.STATUS
+SC-010,Laboratory,Observation component moved unexpectedly,PLANNED,positive|negative|edge,Requires source-target contract and baseline benchmark
+SC-011,Identity,Wrong patient assignment,IMPLEMENTED,positive|negative|edge,Detected in compare_batch() via IDENTITY.WRONG_PATIENT_ASSIGNMENT: a target Patient's demographic identity (family name + birth date) does not match the MRN-matched source patient, but does match a different source patient in the batch
+SC-012,Identity,MRN lost,IMPLEMENTED,positive|negative|edge,Covered by rule IDENTITY.MRN
+SC-013,Identity,Assigning authority changed,IMPLEMENTED,positive|negative|edge,Covered by rule IDENTITY.ASSIGNING_AUTHORITY (substring match on identifier.system)
+SC-014,Identity,Patients unintentionally merged,IMPLEMENTED,positive|negative|edge,Detected in compare_batch() via IDENTITY.MERGE: two distinct source MRNs resolving to the same target Patient resource
+SC-015,Identity,Patient split into identities,IMPLEMENTED,positive|negative|edge,Detected in compare_batch() via IDENTITY.SPLIT: a source patient's demographic identity (family name + birth date) is found on more than one distinct target Patient resource
+SC-016,Identity,Birth date changed,IMPLEMENTED,positive|negative|edge,Covered by rule IDENTITY.BIRTH_DATE
+SC-017,Identity,Deceased flag lost,IMPLEMENTED,positive|negative|edge,Covered by rule IDENTITY.DECEASED
+SC-018,Identity,Demographic mapping altered,IMPLEMENTED,positive|negative|edge,Covered by rule IDENTITY.NAME (family name only; literal comparison)
+SC-019,Identity,Identifier collision,IMPLEMENTED,positive|negative|edge,Detected in compare_batch() via IDENTITY.COLLISION: two distinct target Patient resources sharing the same MRN identifier value
+SC-020,Identity,Merge/link history lost,PLANNED,positive|negative|edge,"Requires modeling FHIR Patient.link, not currently captured by any adapter"
+SC-021,Encounter,Encounter reference changed,IMPLEMENTED,positive|negative|edge,Covered by ENCOUNTER.REFERENCE in compare_many() (observation.encounter.reference vs bundle Encounter.id)
+SC-022,Encounter,Encounter time altered,IMPLEMENTED,positive|negative|edge,Covered by rule ENCOUNTER.PERIOD_START (PV1-44 admit date-time; date-level comparison only)
+SC-023,Encounter,Encounter class changed,IMPLEMENTED,positive|negative|edge,Covered by rule ENCOUNTER.CLASS (HL7v2 Table 0004 subset mapped to FHIR v3-ActEncounterCode)
+SC-024,Encounter,Wrong encounter association,IMPLEMENTED,positive|negative|edge,Detected in compare_batch() via ENCOUNTER.WRONG_PATIENT_ASSIGNMENT: the Encounter attached to a matched target Patient carries a visit number (identifier) belonging to a different source patient in the batch
+SC-025,Encounter,Location lost,IMPLEMENTED,positive|negative|edge,Covered by rule ENCOUNTER.LOCATION (PV1-3 point-of-care vs Encounter.location.location.display)
+SC-026,Encounter,Attending provider changed,IMPLEMENTED,positive|negative|edge,"Covered by rule ENCOUNTER.ATTENDING (PV1-7 vs Encounter.participant with ATND type, substring match)"
+SC-027,Encounter,Encounter status changed,PLANNED,positive|negative|edge,HL7v2 PV1 has no direct status-code equivalent to FHIR Encounter.status
+SC-028,Encounter,ADT event missing,PLANNED,positive|negative|edge,"Requires ADT (A01/A02/A03) trigger-event message parsing, not currently supported by the HL7v2 adapter"
+SC-029,Encounter,Duplicate encounter,IMPLEMENTED,positive|negative|edge,"Detected in compare_batch() via ENCOUNTER.DUPLICATE: a matched target Patient with more than one Encounter resource"
+SC-030,Encounter,Condition detached from encounter,IMPLEMENTED,positive|negative|edge,"Covered by CONDITION[code].ENCOUNTER.REFERENCE in compare_many_conditions() (same underlying check as SC-060)"
+SC-031,Medication,Dose unit changed,IMPLEMENTED,positive|negative|edge,Covered by rule MEDICATION.DOSE_UNIT (literal comparison only)
+SC-032,Medication,Frequency lost,IMPLEMENTED,positive|negative|edge,Covered by rule MEDICATION.FREQUENCY (RXE-1 vs dosageInstruction.timing.code.text; literal comparison)
+SC-033,Medication,Ingredient code changed,IMPLEMENTED,positive|negative|edge,Covered by rule MEDICATION.CODE
+SC-034,Medication,Route altered,IMPLEMENTED,positive|negative|edge,Covered by rule MEDICATION.ROUTE (RXR-1 vs dosageInstruction.route.coding)
+SC-035,Medication,Dosage timing shifted,IMPLEMENTED,positive|negative|edge,Covered by rule MEDICATION.FREQUENCY (RXE-1 is the only timing/frequency field extracted; no separate timing field)
+SC-036,Medication,Prescription status altered,IMPLEMENTED,positive|negative|edge,Covered by rule MEDICATION.STATUS (HL7v2 Table 0038 subset mapped to FHIR MedicationRequest.status)
+SC-037,Medication,Medication quantity changed,IMPLEMENTED,positive|negative|edge,Covered by rule MEDICATION.DOSE_AMOUNT (treated as dose amount; no separate dispense-quantity field extracted)
+SC-038,Medication,Refill information lost,IMPLEMENTED,positive|negative|edge,"Covered by rule MEDICATION.REFILLS (RXE-12 vs MedicationRequest.dispenseRequest.numberOfRepeatsAllowed)"
+SC-039,Medication,Medication date altered,IMPLEMENTED,positive|negative|edge,Covered by rule MEDICATION.DATE (ORC-9 vs MedicationRequest.authoredOn; date-level comparison)
+SC-040,Medication,Request confused with administration,IMPLEMENTED,positive|negative|edge,"Detected in compare_many_medications() via MED[code].REQUEST_CONFUSED_WITH_ADMINISTRATION: source order code matches a target MedicationAdministration, not a MedicationRequest"
+SC-041,Allergy,Allergy substance changed,IMPLEMENTED,positive|negative|edge,Covered by rule ALLERGY.CODE
+SC-042,Allergy,Reaction lost,IMPLEMENTED,positive|negative|edge,Covered by rule ALLERGY.REACTION (literal comparison on reaction.manifestation text)
+SC-043,Allergy,Severity changed,IMPLEMENTED,positive|negative|edge,Covered by rule ALLERGY.SEVERITY (HL7v2 Table 0128 subset mapped to FHIR AllergyIntolerance.reaction.severity)
+SC-044,Allergy,Clinical status altered,IMPLEMENTED,positive|negative|edge,Covered by rule ALLERGY.CLINICAL_STATUS; HL7v2 AL1 has no clinical-status field, so status is carried on a site-defined ZAL segment (ZAL-1) per trading-partner agreement
+SC-045,Allergy,Verification status changed,IMPLEMENTED,positive|negative|edge,Covered by rule ALLERGY.VERIFICATION_STATUS; carried on site-defined ZAL segment (ZAL-2), see SC-044
+SC-046,Allergy,Onset date lost,IMPLEMENTED,positive|negative|edge,Covered by rule ALLERGY.ONSET_DATE (AL1-6 identification date vs onsetDateTime/recordedDate; date-level comparison)
+SC-047,Allergy,Negative allergy assertion changed,IMPLEMENTED,positive|negative|edge,Detected in compare_many_allergies() via ALLERGY.NO_KNOWN_ALLERGY_ASSERTION: a "no known allergies" sentinel (e.g. SNOMED 716186003/160244002 or site-defined "NKA") on one side is contradicted by real allergen entries on the other side
+SC-048,Allergy,Allergy duplicated,IMPLEMENTED,positive|negative|edge,Covered by ALLERGY[code].DUPLICATE in compare_many_allergies()
+SC-049,Allergy,Reaction linked to wrong substance,IMPLEMENTED,positive|negative|edge,Detected in compare_many_allergies() via ALLERGY[code].REACTION_LINKED_TO_WRONG_SUBSTANCE: a source allergy's reaction manifestation(s) are absent from its matched target AllergyIntolerance but found on a different target AllergyIntolerance in the same bundle
+SC-050,Allergy,Allergy omitted,IMPLEMENTED,positive|negative|edge,Covered by ALLERGY[code].MISSING in compare_many_allergies()
+SC-051,Clinical,Diagnosis code changed,IMPLEMENTED,positive|negative|edge,CONDITION.CODE rule compares HL7v2 DG1-3 against FHIR Condition.code.coding
+SC-052,Clinical,Condition clinical status changed,IMPLEMENTED,positive|negative|edge,Covered by rule CONDITION.CLINICAL_STATUS; HL7v2.5 DG1 has no clinical-status field, so status is carried on a site-defined ZDG segment (ZDG-1) per trading-partner agreement
+SC-053,Clinical,Verification status changed,IMPLEMENTED,positive|negative|edge,Covered by rule CONDITION.VERIFICATION_STATUS; carried on site-defined ZDG segment (ZDG-2), see SC-052
+SC-054,Clinical,Onset date lost,IMPLEMENTED,positive|negative|edge,CONDITION.ONSET_DATE rule compares HL7v2 DG1-5 against Condition.onsetDateTime/recordedDate
+SC-055,Clinical,Procedure status altered,IMPLEMENTED,positive|negative|edge,Covered by rule PROCEDURE.STATUS; HL7v2.5 PR1 has no procedure-status field, so status is carried on a site-defined ZPR segment (ZPR-1) per trading-partner agreement
+SC-056,Clinical,Procedure performer changed,IMPLEMENTED,positive|negative|edge,PROCEDURE.PERFORMER rule compares HL7v2 PR1-11/ROL-4 against Procedure.performer.actor
+SC-057,Clinical,Procedure date changed,IMPLEMENTED,positive|negative|edge,PROCEDURE.DATE rule compares HL7v2 PR1-5 against Procedure.performedDateTime/performedPeriod
+SC-058,Clinical,Care plan goal omitted,IMPLEMENTED,positive|negative|edge,"CAREPLAN[id].GOAL via new compare_many_careplans()/parse_fhir_careplan_bundle() (FHIR-to-FHIR, no HL7v2 analog)"
+SC-059,Clinical,Service request intent changed,IMPLEMENTED,positive|negative|edge,"SERVICEREQUEST[id].INTENT via new compare_many_servicerequests()/parse_fhir_servicerequest_bundle() (FHIR-to-FHIR, no HL7v2 analog)"
+SC-060,Clinical,Diagnosis encounter relationship lost,IMPLEMENTED,positive|negative|edge,CONDITION[code].ENCOUNTER.REFERENCE compares PV1-19 visit number against Condition.encounter.reference
+SC-061,Coverage,Effective date changed,IMPLEMENTED,positive|negative|edge,COVERAGE[member_id].COVERAGE.EFFECTIVE_DATE compares IN1-12 against Coverage.period.start
+SC-062,Coverage,Termination date changed,IMPLEMENTED,positive|negative|edge,COVERAGE[member_id].COVERAGE.EXPIRATION_DATE compares IN1-13 against Coverage.period.end
+SC-063,Coverage,Subscriber relationship changed,IMPLEMENTED,positive|negative|edge,COVERAGE[member_id].COVERAGE.RELATIONSHIP compares IN1-17 against Coverage.relationship.coding
+SC-064,Coverage,Member ID altered,IMPLEMENTED,positive|negative|edge,COVERAGE[member_id].COVERAGE.MEMBER_ID compares IN1-49 against Coverage.subscriberId
+SC-065,Coverage,Beneficiary changed,IMPLEMENTED,positive|negative|edge,COVERAGE[member_id].BENEFICIARY (engine-level) compares Coverage.beneficiary.reference against the bundle's declared Patient
+SC-066,Coverage,Payor reference changed,IMPLEMENTED,positive|negative|edge,COVERAGE[member_id].COVERAGE.PAYOR_REFERENCE compares IN1-3 against Coverage.payor[].reference
+SC-067,Coverage,Group number lost,IMPLEMENTED,positive|negative|edge,COVERAGE[member_id].COVERAGE.GROUP_NUMBER compares IN1-8 against Coverage.class[type=group].value
+SC-068,Coverage,Coverage status changed,IMPLEMENTED,positive|negative|edge,Covered by rule COVERAGE.STATUS; HL7v2.5 IN1 has no coverage-status field, so status is carried on a site-defined ZIN segment (ZIN-1) per trading-partner agreement
+SC-069,Coverage,Duplicate coverage,IMPLEMENTED,positive|negative|edge,COVERAGE[member_id].DUPLICATE (engine-level) flags >1 target Coverage sharing a member ID
+SC-070,Coverage,Coverage priority changed,IMPLEMENTED,positive|negative|edge,COVERAGE[member_id].COVERAGE.PRIORITY compares IN1-22 COB priority against Coverage.order
+SC-071,Prior Authorization,Authorization status changed,IMPLEMENTED,positive|negative|edge,PRIORAUTH[id].PRIORAUTH.STATUS compares Claim.status against ClaimResponse.status (FHIR-to-FHIR domain; no HL7v2 analog)
+SC-072,Prior Authorization,Authorization ID lost,IMPLEMENTED,positive|negative|edge,PRIORAUTH[id].PRIORAUTH.AUTHORIZATION_ID compares Claim.identifier against ClaimResponse.identifier
+SC-073,Prior Authorization,Service code altered,IMPLEMENTED,positive|negative|edge,Detected in compare_many_prior_authorizations() via PRIORAUTH[id].ITEM[seq].SERVICE_CODE: the adjudicated service code is carried as a productOrService extension on ClaimResponse.item (base FHIR R4B ClaimResponse.item has no native productOrService element) and compared against the submitted Claim.item.productOrService
+SC-074,Prior Authorization,Approved quantity changed,IMPLEMENTED,positive|negative|edge,PRIORAUTH[id].PRIORAUTH.APPROVED_QUANTITY compares Claim.item.quantity against ClaimResponse item.adjudication[category=benefit].value
+SC-075,Prior Authorization,Validity period changed,IMPLEMENTED,positive|negative|edge,PRIORAUTH[id].PRIORAUTH.VALIDITY_PERIOD compares Claim.billablePeriod against ClaimResponse.preAuthPeriod
+SC-076,Prior Authorization,Supporting information omitted,IMPLEMENTED,positive|negative|edge,Detected in compare_many_prior_authorizations() via PRIORAUTH[id].SUPPORTING_INFO: base FHIR R4B ClaimResponse has no supportingInfo echo of the request's supportingInfo, so it is carried as a supportingInfo extension on ClaimResponse and checked for presence when the Claim declared supportingInfo
+SC-077,Prior Authorization,Requested vs approved service mismatch,IMPLEMENTED,positive|negative|edge,PRIORAUTH[id].SERVICE_MISMATCH (engine-level) correlates ClaimResponse item.itemSequence against submitted Claim.item positions
+SC-078,Prior Authorization,Decision reason omitted,IMPLEMENTED,positive|negative|edge,PRIORAUTH[id].PRIORAUTH.DECISION_REASON requires ClaimResponse.disposition when outcome is error/partial
+SC-079,Prior Authorization,Coverage link lost,IMPLEMENTED,positive|negative|edge,PRIORAUTH[id].COVERAGE_LINK (engine-level) compares Claim.insurance[].coverage.reference against ClaimResponse.insurance[].coverage.reference
+SC-080,Prior Authorization,Workflow status desynchronized,IMPLEMENTED,positive|negative|edge,PRIORAUTH[id].PRIORAUTH.WORKFLOW_SYNC flags a cancelled Claim with a 'complete' ClaimResponse outcome
+SC-081,Claims,Claim line omitted,IMPLEMENTED,positive|negative|edge,CLAIM[id].LINE_MISMATCH (engine-level) correlates Claim.item against ExplanationOfBenefit.item by sequence (FHIR-to-FHIR domain; X12 837/835 is the real wire format, not parsed)
+SC-082,Claims,Billed amount changed,IMPLEMENTED,positive|negative|edge,CLAIM[id].CLAIM.BILLED_AMOUNT compares Claim.total against ExplanationOfBenefit total[category=submitted].amount
+SC-083,Claims,Currency altered,IMPLEMENTED,positive|negative|edge,CLAIM[id].CLAIM.CURRENCY compares Claim.total.currency against ExplanationOfBenefit total[category=submitted].amount.currency
+SC-084,Claims,Diagnosis linkage lost,IMPLEMENTED,positive|negative|edge,CLAIM[id].CLAIM.DIAGNOSIS_LINKAGE compares Claim.diagnosis[] sequence+code against ExplanationOfBenefit.diagnosis[]
+SC-085,Claims,Service date changed,IMPLEMENTED,positive|negative|edge,CLAIM[id].LINE_MISMATCH (engine-level) includes item.servicedDate in the per-line comparison key
+SC-086,Claims,Procedure code changed,IMPLEMENTED,positive|negative|edge,CLAIM[id].LINE_MISMATCH (engine-level) includes item.productOrService in the per-line comparison key
+SC-087,Claims,Service quantity changed,IMPLEMENTED,positive|negative|edge,CLAIM[id].LINE_MISMATCH (engine-level) includes item.quantity in the per-line comparison key
+SC-088,Claims,Adjudication status altered,IMPLEMENTED,positive|negative|edge,CLAIM[id].CLAIM.STATUS compares Claim.status against ExplanationOfBenefit.status
+SC-089,Claims,Payment adjustment omitted,PLANNED,positive|negative|edge,Out of scope: EOB.payment is purely payer-adjudication data with no analog on the submitted Claim to reconcile against
+SC-090,Claims,Claim EOB link mismatched,IMPLEMENTED,positive|negative|edge,CLAIM[id].EOB_LINK (engine-level) compares ExplanationOfBenefit.claim.reference against the matched Claim's id
+SC-091,Terminology,Code system changed,IMPLEMENTED,positive|negative|edge,TERMINOLOGY.SYSTEM rule; HL7v2 OBX-3.3 coding-system mapped to canonical URI vs FHIR Observation.code.coding[].system
+SC-092,Terminology,Code version mismatch,IMPLEMENTED,positive|negative|edge,TERMINOLOGY.VERSION rule; HL7v2 OBX-3.7 coding-system version vs FHIR Observation.code.coding[].version
+SC-093,Terminology,Local code mapping incorrect,IMPLEMENTED,positive|negative|edge,TERMINOLOGY.LOCAL_MAPPING rule against a bundled local-code mapping table (_LOCAL_CODE_MAP)
+SC-094,Terminology,Unapproved concept representation,IMPLEMENTED,positive|negative|edge,TERMINOLOGY.VALUESET_BINDING rule against a bundled ValueSet-binding table (_APPROVED_VALUESET)
+SC-095,Terminology,UCUM conversion incorrect,IMPLEMENTED,positive|negative|edge,TERMINOLOGY.UCUM_CONVERSION rule against a bundled unit-conversion table (_UCUM_CONVERSION)
+SC-096,Terminology,Display contradicts code,IMPLEMENTED,positive|negative|edge,TERMINOLOGY.DISPLAY rule; HL7v2 OBX-3.2 display text vs FHIR Observation.code.coding[].display
+SC-097,Terminology,Deprecated code used,IMPLEMENTED,positive|negative|edge,TERMINOLOGY.DEPRECATED_CODE rule against a bundled code-system currency/deprecation table (_DEPRECATED_CODES)
+SC-098,Terminology,SNOMED specificity changed,IMPLEMENTED,positive|negative|edge,TERMINOLOGY.SNOMED_SPECIFICITY rule against a bundled SNOMED parent/child table (_SNOMED_PARENT)
+SC-099,Terminology,Multi-coding incomplete,IMPLEMENTED,positive|negative|edge,TERMINOLOGY.MULTI_CODING rule; HL7v2 OBX-3.4 alternate coding vs a second entry in FHIR Observation.code.coding[]
+SC-100,Terminology,FHIR element meaning moved,IMPLEMENTED,positive|negative|edge,TERMINOLOGY.ELEMENT_MEANING_MOVED rule; detects OBX-3.5 alternate text mapped into Observation.code.coding[].display instead of OBX-3.2 primary display
+SC-101,Documents,Attachment missing,IMPLEMENTED,positive|negative|edge,DOCUMENT[id].ATTACHMENT engine-level check on DocumentReference.content[0].attachment
+SC-102,Documents,Content hash changed,PLANNED,positive|negative|edge,"TXA (transcription document header) is metadata-only and never carries a content hash to compare against; out of scope for the HL7v2-source prototype"
+SC-103,Documents,Document category changed,IMPLEMENTED,positive|negative|edge,DOCUMENT.TYPE rule (TXA-2 vs DocumentReference.type.coding[].code)
+SC-104,Documents,Author lost,IMPLEMENTED,positive|negative|edge,DOCUMENT.AUTHOR rule (TXA-9 vs DocumentReference.author[].reference)
+SC-105,Documents,Creation date changed,IMPLEMENTED,positive|negative|edge,DOCUMENT.DATE rule (TXA-6 vs DocumentReference.date date-level comparison)
+SC-106,Documents,Security label omitted,IMPLEMENTED,positive|negative|edge,DOCUMENT.CONFIDENTIALITY rule (TXA-18 vs DocumentReference.securityLabel[].coding[].code)
+SC-107,Documents,Patient relationship changed,IMPLEMENTED,positive|negative|edge,DOCUMENT[id].PATIENT_REF engine-level check on DocumentReference.subject.reference
+SC-108,Documents,Clinical note section missing,PLANNED,positive|negative|edge,"Requires structured document content (e.g. CDA sections), which TXA (header-only) does not carry"
+SC-109,Documents,Supersession link lost,IMPLEMENTED,positive|negative|edge,DOCUMENT.SUPERSESSION rule (TXA-13 vs DocumentReference.relatesTo[code=replaces])
+SC-110,Documents,MIME type changed,IMPLEMENTED,positive|negative|edge,DOCUMENT.CONTENT_TYPE rule (TXA-3 vs DocumentReference.content[0].attachment.contentType)
+SC-111,Migration & Drift,Source record missing,IMPLEMENTED,positive|negative|edge,RECORD[key].MISSING engine-level check over a generic cross-resource-type batch
+SC-112,Migration & Drift,Unexpected duplicate,IMPLEMENTED,positive|negative|edge,RECORD[key].DUPLICATE engine-level check over a generic cross-resource-type batch
+SC-113,Migration & Drift,Category count discrepancy,IMPLEMENTED,positive|negative|edge,CATEGORY[resourceType].COUNT aggregate check comparing per-resourceType counts across the batch
+SC-114,Migration & Drift,Transformation lineage missing,IMPLEMENTED,positive|negative|edge,RECORD[key].LINEAGE check on target Resource.meta.source
+SC-115,Migration & Drift,Provenance changed,IMPLEMENTED,positive|negative|edge,Detected in compare_migration_batch() via RECORD[key].PROVENANCE: a matched Provenance resource's agent/activity/entity content must be preserved across migration, independent of SC-114's meta.source lineage presence check
+SC-116,Migration & Drift,Incremental sync gap,IMPLEMENTED,positive|negative|edge,"RUN.SYNC_GAP via compare_migration_run_history(): compares current run timestamp against most recent prior run from job history"
+SC-117,Migration & Drift,Late update overwritten,IMPLEMENTED,positive|negative|edge,"RULE[id].LATE_UPDATE_OVERWRITTEN via compare_migration_run_history(): flags any rule that PASSed in the prior run but FAILs now"
+SC-118,Migration & Drift,Mapping behavior changed,IMPLEMENTED,positive|negative|edge,RECORD[key].MAPPING_BEHAVIOR check; detects a resource's subject reference relocated from the standard Resource.subject element into extension[] (or dropped/retargeted) during migration
+SC-119,Migration & Drift,Contract compliance degraded,IMPLEMENTED,positive|negative|edge,"RUN.CONTRACT_COMPLIANCE via compare_migration_run_history(): current run's PASS rate vs best historical PASS rate"
+SC-120,Migration & Drift,Field population distribution changed,IMPLEMENTED,positive|negative|edge,"RULE[id].POPULATION_DISTRIBUTION via compare_migration_run_history(): per-rule INDETERMINATE-rate shift vs historical average"
+SC-121,Provider Directory,NPI mismatch between credentialing system and directory,IMPLEMENTED,positive|negative|edge,Da Vinci PDex Plan-Net; Practitioner.identifier (NPI)
+SC-122,Provider Directory,Network participation status stale,IMPLEMENTED,positive|negative|edge,Da Vinci PDex Plan-Net; PractitionerRole.network / Organization affiliation
+SC-123,Provider Directory,Practice address changed but not published,IMPLEMENTED,positive|negative|edge,Da Vinci PDex Plan-Net; Location.address
+SC-124,Provider Directory,Accepting-new-patients flag out of date,IMPLEMENTED,positive|negative|edge,Da Vinci PDex Plan-Net; PractitionerRole.extension (new-patients)
+SC-125,Provider Directory,Specialty/taxonomy code dropped,IMPLEMENTED,positive|negative|edge,Da Vinci PDex Plan-Net; PractitionerRole.specialty
+SC-126,Provider Directory,Provider duplicated under two organizations,IMPLEMENTED,positive|negative|edge,Da Vinci PDex Plan-Net; cross-record matching across PractitionerRole
+SC-127,Provider Directory,Telehealth/service location omitted,IMPLEMENTED,positive|negative|edge,Da Vinci PDex Plan-Net; HealthcareService.location
+SC-128,Provider Directory,Health plan/network reference broken,IMPLEMENTED,positive|negative|edge,Da Vinci PDex Plan-Net; InsurancePlan.network reference consistency
+SC-129,Provider Directory,Provider terminated but still listed active,IMPLEMENTED,positive|negative|edge,Da Vinci PDex Plan-Net; PractitionerRole.active / period.end
+SC-130,Provider Directory,Phone/contact information drift,IMPLEMENTED,positive|negative|edge,Da Vinci PDex Plan-Net; Location.telecom
+SC-131,ATR (Member Attribution),Member missing from attribution list,IMPLEMENTED,positive|negative|edge,Da Vinci ATR; bulk-exported Group/Patient membership vs. provider panel
+SC-132,ATR (Member Attribution),Duplicate member attributed to two providers,IMPLEMENTED,positive|negative|edge,Da Vinci ATR; cross-list attribution conflict
+SC-133,ATR (Member Attribution),Attribution effective date incorrect,IMPLEMENTED,positive|negative|edge,Da Vinci ATR; Group.member.period
+SC-134,ATR (Member Attribution),Coverage reference missing on attributed member,IMPLEMENTED,positive|negative|edge,Da Vinci ATR; Patient-Coverage linkage in attribution bundle
+SC-135,ATR (Member Attribution),Attribution list reconciliation count mismatch,IMPLEMENTED,positive|negative|edge,Da Vinci ATR \"Member Attribution List Reconciliation API\"; bulk export vs. provider-side panel totals
+SC-136,ATR (Member Attribution),VBC contract identifier lost,IMPLEMENTED,positive|negative|edge,Da Vinci ATR; Group.identifier (contract/program)
+SC-137,ATR (Member Attribution),Encounter history omitted from attribution bundle,IMPLEMENTED,positive|negative|edge,Da Vinci ATR; included Encounter resources
+SC-138,ATR (Member Attribution),Stale bulk-export snapshot used,IMPLEMENTED,positive|negative|edge,"RUN.EXPORT_STALENESS via compare_export_run_history(): current export snapshot timestamp vs most recent known $davinci-data-export run"
+SC-139,ATR (Member Attribution),Attributed member deceased but still active,IMPLEMENTED,positive|negative|edge,Da Vinci ATR; Patient.deceased cross-check
+SC-140,ATR (Member Attribution),Risk-adjustment flag dropped,IMPLEMENTED,positive|negative|edge,Da Vinci ATR; Group.characteristic extension
+SC-141,Formulary,Drug tier changed without notice,IMPLEMENTED,positive|negative|edge,Da Vinci PDex US Drug Formulary; Basic.extension (drugTierID)
+SC-142,Formulary,Cost-share amount mismatch,IMPLEMENTED,positive|negative|edge,Da Vinci PDex US Drug Formulary; Basic.extension (costShareNormal/Deductible)
+SC-143,Formulary,Prior-authorization flag omitted,IMPLEMENTED,positive|negative|edge,Da Vinci PDex US Drug Formulary; Basic.extension (priorAuthorization)
+SC-144,Formulary,Step-therapy flag omitted,IMPLEMENTED,positive|negative|edge,Da Vinci PDex US Drug Formulary; Basic.extension (stepTherapyLimit)
+SC-145,Formulary,Drug dropped from formulary without plan update,IMPLEMENTED,positive|negative|edge,Da Vinci PDex US Drug Formulary; FormularyItem presence vs. plan benefit source
+SC-146,Formulary,RxNorm code mismatch,IMPLEMENTED,positive|negative|edge,Da Vinci PDex US Drug Formulary; MedicationKnowledge.code (RxNorm)
+SC-147,Formulary,Quantity-limit value changed,IMPLEMENTED,positive|negative|edge,Da Vinci PDex US Drug Formulary; Basic.extension (quantityLimit)
+SC-148,Formulary,Formulary-plan linkage broken,IMPLEMENTED,positive|negative|edge,Da Vinci PDex US Drug Formulary; Formulary.extension (planId) reference consistency
+SC-149,Formulary,Pharmacy network tier mismatch,IMPLEMENTED,positive|negative|edge,Da Vinci PDex US Drug Formulary; Basic.extension (pharmacyType)
+SC-150,Formulary,Formulary effective date stale,IMPLEMENTED,positive|negative|edge,Da Vinci PDex US Drug Formulary; Formulary.extension (effective period)
+SC-151,Immunization,Vaccine (CVX) code altered,IMPLEMENTED,positive|negative|edge,CDC/HL7 Immunization IG; VXU^V04 RXA-5 vs Immunization.vaccineCode
+SC-152,Immunization,Lot number lost,IMPLEMENTED,positive|negative|edge,CDC/HL7 Immunization IG; RXA-15 vs Immunization.lotNumber
+SC-153,Immunization,Administration date changed,IMPLEMENTED,positive|negative|edge,CDC/HL7 Immunization IG; RXA-3 vs Immunization.occurrenceDateTime
+SC-154,Immunization,Completion status altered (e.g. not-done recorded as completed),IMPLEMENTED,positive|negative|edge,CDC/HL7 Immunization IG; RXA-20 (Table 0322) vs Immunization.status
+SC-155,Immunization,Dose amount/unit changed,IMPLEMENTED,positive|negative|edge,CDC/HL7 Immunization IG; RXA-6/RXA-7 vs Immunization.doseQuantity
+SC-156,Immunization,Manufacturer dropped,IMPLEMENTED,positive|negative|edge,CDC/HL7 Immunization IG; RXA-17 vs Immunization.manufacturer
+SC-157,Immunization,Expiration date changed,IMPLEMENTED,positive|negative|edge,CDC/HL7 Immunization IG; RXA-16 vs Immunization.expirationDate
+SC-158,Immunization,Immunization record dropped entirely,IMPLEMENTED,positive|negative|edge,CDC/HL7 Immunization IG; cross-record presence check in compare_many_immunizations()
+SC-159,Goal,Goal lifecycle status silently changed,IMPLEMENTED,positive|negative|edge,US Core Goal profile; FHIR-to-FHIR GOAL[id].LIFECYCLE_STATUS in compare_many_goals()
+SC-160,Goal,Goal achievement status dropped,IMPLEMENTED,positive|negative|edge,US Core Goal profile; FHIR-to-FHIR GOAL[id].ACHIEVEMENT_STATUS in compare_many_goals()
+SC-161,CareTeam,Care team status silently changed,IMPLEMENTED,positive|negative|edge,US Core CareTeam profile; FHIR-to-FHIR CARETEAM[id].STATUS in compare_many_careteams()
+SC-162,CareTeam,Care team participant dropped,IMPLEMENTED,positive|negative|edge,US Core CareTeam profile; FHIR-to-FHIR CARETEAM[id].PARTICIPANT in compare_many_careteams()
+SC-163,Risk Adjustment,Detected issue (coding gap) status silently changed,IMPLEMENTED,positive|negative|edge,Da Vinci Risk Adjustment (Gaps in Care & Information) IG; FHIR-to-FHIR DETECTEDISSUE[id].STATUS in compare_many_detected_issues()
+SC-164,Risk Adjustment,Detected issue supporting evidence detail dropped,IMPLEMENTED,positive|negative|edge,Da Vinci Risk Adjustment IG; FHIR-to-FHIR DETECTEDISSUE[id].EVIDENCE_DETAIL in compare_many_detected_issues()
+SC-165,CDex,Task status silently regressed,IMPLEMENTED,positive|negative|edge,Da Vinci Clinical Data Exchange (CDex) IG; FHIR-to-FHIR TASK[id].STATUS in compare_many_tasks()
+SC-166,CDex,Task business status dropped,IMPLEMENTED,positive|negative|edge,Da Vinci CDex IG; FHIR-to-FHIR TASK[id].BUSINESS_STATUS in compare_many_tasks()
+SC-167,DiagnosticReport,Diagnostic report result status silently regressed,IMPLEMENTED,positive|negative|edge,US Core Laboratory Result profile; ORU^R01 OBR-25 vs DiagnosticReport.status in compare_many_diagnosticreports()
+SC-168,DiagnosticReport,Diagnostic report universal service code altered,IMPLEMENTED,positive|negative|edge,US Core Laboratory Result profile; OBR-4 vs DiagnosticReport.code in compare_many_diagnosticreports()
+SC-169,DiagnosticReport,Diagnostic report date changed,IMPLEMENTED,positive|negative|edge,US Core Laboratory Result profile; OBR-7 vs DiagnosticReport.effectiveDateTime in compare_many_diagnosticreports()
+SC-170,DiagnosticReport,Diagnostic report dropped entirely,IMPLEMENTED,positive|negative|edge,US Core Laboratory Result profile; cross-record presence check in compare_many_diagnosticreports()
+SC-171,Laboratory,Observation method dropped,IMPLEMENTED,positive|negative|edge,US Core Laboratory Result Observation profile (Must Support); OBX-17 vs Observation.method covered by rule LAB.METHOD
+SC-172,Laboratory,Responsible observer dropped,IMPLEMENTED,positive|negative|edge,US Core Laboratory Result Observation profile (Must Support); OBX-16 vs Observation.performer covered by rule LAB.PERFORMER
+SC-173,DiagnosticReport,Principal result interpreter dropped,IMPLEMENTED,positive|negative|edge,US Core Laboratory Result Diagnostic Report profile (Must Support); OBR-32 vs DiagnosticReport.performer covered by rule DIAGNOSTICREPORT.PERFORMER

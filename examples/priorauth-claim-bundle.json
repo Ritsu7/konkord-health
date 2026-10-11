@@ -1,0 +1,42 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "SYNTH002",
+        "name": [{"family": "Example", "given": ["Patient"]}],
+        "birthDate": "1980-01-01"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Claim",
+        "id": "claim-1",
+        "status": "active",
+        "type": {"coding": [{"system": "http://terminology.hl7.org/CodeSystem/claim-type", "code": "institutional"}]},
+        "use": "preauthorization",
+        "patient": {"reference": "Patient/SYNTH002"},
+        "created": "2026-01-01T00:00:00Z",
+        "provider": {"reference": "Organization/PROV001"},
+        "priority": {"coding": [{"code": "normal"}]},
+        "insurance": [
+          {"sequence": 1, "focal": true, "coverage": {"reference": "Coverage/coverage-1"}}
+        ],
+        "item": [
+          {
+            "sequence": 1,
+            "productOrService": {"coding": [{"system": "http://www.ama-assn.org/go/cpt", "code": "97110"}]},
+            "quantity": {"value": 12}
+          }
+        ],
+        "supportingInfo": [
+          {"sequence": 1, "category": {"coding": [{"code": "info"}]}, "valueString": "Referral from Dr. Smith"}
+        ],
+        "identifier": [{"system": "http://example.org/priorauth", "value": "PA-1001"}],
+        "billablePeriod": {"start": "2026-01-01", "end": "2026-06-30"}
+      }
+    }
+  ]
+}

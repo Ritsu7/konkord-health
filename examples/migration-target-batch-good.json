@@ -1,0 +1,14 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {"resource": {"resourceType": "Patient", "id": "SYNTH001", "meta": {"source": "https://source-ehr.example.org"}}},
+    {"resource": {"resourceType": "Condition", "id": "COND-1", "meta": {"source": "https://source-ehr.example.org"}, "subject": {"reference": "Patient/SYNTH001"}}},
+    {"resource": {"resourceType": "Condition", "id": "COND-2", "meta": {"source": "https://source-ehr.example.org"}, "subject": {"reference": "Patient/SYNTH001"}}},
+    {"resource": {"resourceType": "Procedure", "id": "PROC-1", "meta": {"source": "https://source-ehr.example.org"}, "subject": {"reference": "Patient/SYNTH001"}}},
+    {"resource": {"resourceType": "Provenance", "id": "PROV-1", "meta": {"source": "https://source-ehr.example.org"},
+      "agent": [{"who": {"reference": "Practitioner/PRACT-1"}}],
+      "activity": {"coding": [{"code": "UPDATE"}]},
+      "entity": [{"what": {"reference": "Condition/COND-1"}}]}}
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Basic",
+        "id": "formulary-1",
+        "code": {"coding": [{"code": "Formulary"}]},
+        "identifier": [{"value": "FORM-100"}],
+        "extension": [
+          {"url": "planReference", "valueReference": {"reference": "InsurancePlan/plan-1"}},
+          {"url": "effectivePeriod", "valuePeriod": {"start": "2023-01-01", "end": "2023-12-31"}}
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Basic",
+        "id": "item-1",
+        "code": {"coding": [{"code": "FormularyItem"}]},
+        "identifier": [{"value": "FITEM-1"}],
+        "extension": [
+          {"url": "drugTierID", "valueString": "brand"},
+          {"url": "costShareNormal", "valueMoney": {"value": 50, "currency": "USD"}},
+          {"url": "costShareDeductible", "valueBoolean": true},
+          {"url": "priorAuthorization", "valueBoolean": true},
+          {"url": "stepTherapyLimit", "valueBoolean": true},
+          {"url": "quantityLimit", "valueBoolean": true},
+          {"url": "pharmacyType", "valueString": "mail-order"},
+          {"url": "formularyReference", "valueReference": {"reference": "Basic/formulary-missing"}},
+          {"url": "medicationReference", "valueReference": {"reference": "MedicationKnowledge/med-1"}}
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationKnowledge",
+        "id": "med-1",
+        "code": {"coding": [{"system": "http://www.nlm.nih.gov/research/umls/rxnorm", "code": "99999", "display": "Drug X (wrong code)"}]}
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "InsurancePlan",
+        "id": "plan-1"
+      }
+    }
+  ]
+}

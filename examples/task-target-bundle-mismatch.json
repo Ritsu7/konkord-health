@@ -1,0 +1,17 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Task",
+        "id": "TASK-1",
+        "status": "in-progress",
+        "businessStatus": {
+          "coding": [{"system": "http://example.org/cdex-business-status", "code": "pending-review"}]
+        },
+        "for": {"reference": "Patient/PT-1"}
+      }
+    }
+  ]
+}

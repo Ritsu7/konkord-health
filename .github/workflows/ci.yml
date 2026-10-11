@@ -1,0 +1,25 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  test:
+    name: Test (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+      - name: Install package with all extras
+        run: python -m pip install -e ".[db,hl7,dev]"
+      - name: Run test suite
+        run: python -m unittest discover -s tests -v
+      - name: Alembic migrations apply cleanly on a fresh SQLite DB
+        run: |
+          rm -f ./ci_alembic_check.db
+          KONKORD_DATABASE_URL="sqlite:///./ci_alembic_check.db" python -m alembic upgrade head
+          rm -f ./ci_alembic_check.db

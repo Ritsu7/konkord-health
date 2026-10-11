@@ -1,0 +1,10 @@
+{
+  "resourceType": "Observation", "status": "final",
+  "code": {"coding": [{"system": "http://loinc.org", "code": "4548-4"}]},
+  "specimen": {"type": {"text": "BLD"}},
+  "valueQuantity": {"value": 7.2, "unit": "%", "system": "http://unitsofmeasure.org", "code": "%"},
+  "interpretation": [{"coding": [{"code": "H"}]}],
+  "referenceRange": [{"low": {"value": 4.0}, "high": {"value": 5.6}}],
+  "method": {"coding": [{"code": "HPLC"}]},
+  "performer": [{"reference": "Practitioner/OBS100"}]
+}

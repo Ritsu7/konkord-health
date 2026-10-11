@@ -1,0 +1,17 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Task",
+        "id": "TASK-1",
+        "status": "completed",
+        "businessStatus": {
+          "coding": [{"system": "http://example.org/cdex-business-status", "code": "fulfilled"}]
+        },
+        "for": {"reference": "Patient/PT-1"}
+      }
+    }
+  ]
+}

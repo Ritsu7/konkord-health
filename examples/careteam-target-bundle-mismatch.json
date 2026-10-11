@@ -1,0 +1,17 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "CareTeam",
+        "id": "CARETEAM-1",
+        "status": "inactive",
+        "subject": {"reference": "Patient/PT-1"},
+        "participant": [
+          {"member": {"reference": "Practitioner/PRACT-1"}}
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "resourceType": "Observation", "status": "final",
+  "code": {"coding": [
+    {"system": "http://hl7.org/fhir/sid/icd-10-cm", "code": "4548-4", "display": "A1C level", "version": "1.0"}
+  ]},
+  "specimen": {"type": {"text": "BLD"}},
+  "valueQuantity": {"value": 7.2, "unit": "%", "system": "http://unitsofmeasure.org", "code": "%"},
+  "interpretation": [{"coding": [{"code": "H"}]}],
+  "referenceRange": [{"low": {"value": 4.0}, "high": {"value": 5.6}}]
+}

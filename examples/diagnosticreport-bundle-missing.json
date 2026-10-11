@@ -1,0 +1,26 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "SYNTH100"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "DR-2",
+        "status": "final",
+        "code": {
+          "coding": [
+            {"system": "http://loinc.org", "code": "99999-9", "display": "Unrelated panel"}
+          ]
+        },
+        "subject": {"reference": "Patient/SYNTH100"},
+        "effectiveDateTime": "2026-10-08T12:00:00Z"
+      }
+    }
+  ]
+}

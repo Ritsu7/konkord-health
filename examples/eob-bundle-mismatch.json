@@ -1,0 +1,52 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "SYNTH003",
+        "name": [{"family": "Example", "given": ["Patient"]}],
+        "birthDate": "1980-01-01"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "ExplanationOfBenefit",
+        "id": "eob-1",
+        "status": "cancelled",
+        "type": {"coding": [{"system": "http://terminology.hl7.org/CodeSystem/claim-type", "code": "professional"}]},
+        "use": "claim",
+        "patient": {"reference": "Patient/SYNTH003"},
+        "created": "2026-02-03T00:00:00Z",
+        "insurer": {"reference": "Organization/PAYOR001"},
+        "provider": {"reference": "Organization/PROV001"},
+        "claim": {"reference": "Claim/wrong-claim"},
+        "outcome": "partial",
+        "insurance": [
+          {"focal": true, "coverage": {"reference": "Coverage/coverage-1"}}
+        ],
+        "diagnosis": [
+          {"sequence": 1, "diagnosisCodeableConcept": {"coding": [{"system": "http://hl7.org/fhir/sid/icd-10-cm", "code": "M25.511"}]}}
+        ],
+        "item": [
+          {
+            "sequence": 1,
+            "productOrService": {"coding": [{"system": "http://www.ama-assn.org/go/cpt", "code": "97140"}]},
+            "servicedDate": "2026-02-05",
+            "quantity": {"value": 1},
+            "net": {"value": 50.00, "currency": "USD"},
+            "adjudication": [
+              {"category": {"coding": [{"code": "benefit"}]}, "amount": {"value": 40.00, "currency": "USD"}}
+            ]
+          }
+        ],
+        "total": [
+          {"category": {"coding": [{"code": "submitted"}]}, "amount": {"value": 50.00, "currency": "GBP"}},
+          {"category": {"coding": [{"code": "benefit"}]}, "amount": {"value": 40.00, "currency": "GBP"}}
+        ],
+        "identifier": [{"system": "http://example.org/claim", "value": "CLM-2001"}]
+      }
+    }
+  ]
+}

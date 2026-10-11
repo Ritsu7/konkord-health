@@ -1,0 +1,91 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Practitioner",
+        "id": "pract-1",
+        "identifier": [{"system": "http://hl7.org/fhir/sid/us-npi", "value": "9999999999"}],
+        "name": [{"family": "Smith", "given": ["Jane"]}]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Organization",
+        "id": "org-1",
+        "name": "Example Clinic"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Organization",
+        "id": "org-2",
+        "name": "Other Clinic"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Location",
+        "id": "loc-1",
+        "address": {"line": ["999 Other Ave"], "city": "Shelbyville", "state": "IL", "postalCode": "62565"},
+        "telecom": [{"system": "phone", "value": "555-999-9999"}]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "PractitionerRole",
+        "id": "role-1",
+        "identifier": [{"system": "http://example.org/role", "value": "ROLE-1"}],
+        "active": false,
+        "period": {"start": "2024-01-01"},
+        "practitioner": {"reference": "Practitioner/pract-1"},
+        "organization": {"reference": "Organization/org-1"},
+        "location": [{"reference": "Location/loc-1"}],
+        "healthcareService": []
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "InsurancePlan",
+        "id": "plan-1",
+        "network": [{"reference": "Organization/org-99"}]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Practitioner",
+        "id": "pract-2",
+        "identifier": [{"system": "http://hl7.org/fhir/sid/us-npi", "value": "2222222222"}]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "PractitionerRole",
+        "id": "role-2",
+        "identifier": [{"system": "http://example.org/role", "value": "ROLE-2"}],
+        "active": true,
+        "period": {"start": "2020-01-01"},
+        "practitioner": {"reference": "Practitioner/pract-2"},
+        "organization": {"reference": "Organization/org-1"}
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Practitioner",
+        "id": "pract-3",
+        "identifier": [{"system": "http://hl7.org/fhir/sid/us-npi", "value": "3333333333"}]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "PractitionerRole",
+        "id": "role-3",
+        "identifier": [{"system": "http://example.org/role", "value": "ROLE-3"}],
+        "active": true,
+        "practitioner": {"reference": "Practitioner/pract-3"},
+        "organization": {"reference": "Organization/org-2"}
+      }
+    }
+  ]
+}
